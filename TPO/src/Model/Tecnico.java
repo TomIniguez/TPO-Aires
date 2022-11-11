@@ -8,6 +8,7 @@ public class Tecnico  extends Agenda{
 	private String nombre;
 	private String apellido;
 	private int id;
+	private int costoPorHora;
 	
 	public List<Instalacion> getListaInstalacionAsig() {
 		return listaInstalacionAsig;
@@ -39,5 +40,13 @@ public class Tecnico  extends Agenda{
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getCostoPorHora() {
+		return costoPorHora;
+	}
+
+	public void setCostoPorHora(int costoPorHora) {
+		this.costoPorHora = costoPorHora;
 	}
 }
