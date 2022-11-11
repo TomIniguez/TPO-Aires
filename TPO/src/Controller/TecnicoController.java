@@ -5,7 +5,7 @@ public class TecnicoController  {
 	private MainController instanciaMainController;
 	
 	private TecnicoController() {
-		this.instanciaMainController = instanciaMainController.getInstancia();
+		this.instanciaMainController = MainController.getInstancia();
 	}
 	
 	public TecnicoController getInstanciaTecnicoController() {

@@ -43,4 +43,45 @@ public class MainController {
 		this.listaClientes.add(c);
 	}
 
+	public ArrayList<AdministradorSistemas> getListaAdministradoresSistemas() {
+		return listaAdministradoresSistemas;
+	}
+
+	public void setListaAdministradoresSistemas(ArrayList<AdministradorSistemas> listaAdministradoresSistemas) {
+		this.listaAdministradoresSistemas = listaAdministradoresSistemas;
+	}
+
+	public ArrayList<OperadorCallCenter> getListaOperadoresCallCenter() {
+		return listaOperadoresCallCenter;
+	}
+
+	public void setListaOperadoresCallCenter(ArrayList<OperadorCallCenter> listaOperadoresCallCenter) {
+		this.listaOperadoresCallCenter = listaOperadoresCallCenter;
+	}
+
+	public ArrayList<Administrativo> getListaEmpleadosAdministrativos() {
+		return listaEmpleadosAdministrativos;
+	}
+
+	public void setListaEmpleadosAdministrativos(ArrayList<Administrativo> listaEmpleadosAdministrativos) {
+		this.listaEmpleadosAdministrativos = listaEmpleadosAdministrativos;
+	}
+
+	public ArrayList<Tecnico> getListaTecnicos() {
+		return listaTecnicos;
+	}
+
+	public void setListaTecnicos(ArrayList<Tecnico> listaTecnicos) {
+		this.listaTecnicos = listaTecnicos;
+	}
+
+	public ArrayList<Cliente> getListaClientes() {
+		return listaClientes;
+	}
+
+	public void setListaClientes(ArrayList<Cliente> listaClientes) {
+		this.listaClientes = listaClientes;
+	}
+	
+
 }

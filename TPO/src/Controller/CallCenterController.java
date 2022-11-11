@@ -1,7 +1,5 @@
 package Controller;
 
-import java.util.Date;
-
 import Model.Cliente;
 import Model.Instalacion;
 

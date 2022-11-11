@@ -10,8 +10,8 @@ public class AdministrativoController {
 	private AdministrativoController instanciaAdministrativoController;
 	private ArrayList<Factura> listaFacturasEmitidas;
 	
-	private AdministrativoController() {
-		this.instanciaMainController.getInstancia();
+	public AdministrativoController() {
+		MainController.getInstancia();
 		
 	}
 	
@@ -35,4 +35,13 @@ public class AdministrativoController {
 	public void modificarFactura(Factura f) {
 		
 	}
+
+	public ArrayList<Factura> getListaFacturasEmitidas() {
+		return listaFacturasEmitidas;
+	}
+
+	public void setListaFacturasEmitidas(ArrayList<Factura> listaFacturasEmitidas) {
+		this.listaFacturasEmitidas = listaFacturasEmitidas;
+	}
+	
 }
