@@ -1,0 +1,75 @@
+@startuml
+class EquipoAC{
++listarFacturas(): void
++listarInstalaciones(): void
+}
+class OperadorCallCenter{
+-nombre: String
+-apellido: String
+-dni: int
++verificarCliente(): void
++generarInstalacion(): void
+}
+class Tecnico{
+-nombre: String
+-apellido: String
+-dni: int
+-turno: String
+-disponibilidad: boolean
++verInstalaciones(): void
++gestionarInstalacion(): void
++almuerzo(): boolean
+}
+class Administrativo{
+-nombre: String
+-apellido: String
+-dni: int
++generarFactura(): void
++emitirFactura(): void
++enviarFactura(): void*
++ajustarValores(): void
++revisarListadoFacturas():
+}
+class AdministradorSistema{
+-nombre: String
+-apellido: String
+-dni: int
++realizarABM(): void
++configurarCostoPorHora(): void
++ajustarValoresStock(): void
++configurarSistema(): void*
++costoViaje(): int
+}
+class Cliente{
+-cuitCuil: int
+-nombre: String
+-apellido: String
+
+}
+class Instalacion{
+-{static} contador: int
+-dia: int
+-turno: String
+-tecnico: Tecnico
+-cliente: Cliente
+-horaInicial: int
+-horaFinal: int
+-estado: enum
++verificarStock(): void
++stockUsado(): void
++tiempoTrabajado(): int
++otrosCostos(): void**
++gastos(): void**
+}
+class Stock{
+-Evaporadoras: int
+-Condensadoras: int 
+-kitsDeInstalación: int
+}
+class Factura{
+-facturas: List<Factura>
+-tipo: String
+}
+class Agenda{
+}
+@enduml
