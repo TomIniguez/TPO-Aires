@@ -1,0 +1,226 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class SistemaAiresAcondicionados{
+    -listaEmpleadosCallCenter: ArrayList<CallCenter>
+    -listaEmpleadosTecnicos: ArrayList<Tecnico>
+    -listaEmpleadoAdministrativo: ArrayList<Administrativo>
+    -listaEmpleadosAdministradorSistema: ArrayList<AdministradorSistema>
+    -listaClientes: ArrayList<Cliente>
+}
+
+class AreaAdministrativo{
+    +facturarInstalacionRealizada(Servicio s, Cliente c):Factura
+    +ajustarValoresFacturaSegun(Servicio s): Factura
+
+}
+class AreaCallCenter{
+    +programarInstalacion(int nroCliente, String dia, String horario):Instalacion
+    +darDeAltaCliente(int cuit_cuil,string nombre, string direccion,string telefono):void
+}
+class AreaTecnico{
+    +ejecutarInstalacionPlanificada(String dia, String horarioInicio):void
+    +visualizarInstalacionesProgramadas():void
+    +modificarInstalacion(int nroInstalacion):Instalacion
+    +eliminarInstalacion(int nroInstalacion):void
+    +registrarInstalacionRealizada(Tecnico i, string horaInicio, string horaFin, List<Elemento> material):void
+}
+
+
+class Cliente{
+    -cuit_cuil: int
+    -direccion: String
+    -mail: String
+    -telefono:String
+
+    +Cliente(string nombreCliente, int cuit_cuil, string direccion, string mail, string telefono)
+    +Cliente(string nombreCliente, int cuit_cuil, string direccion, string telefono)
+    +getCuitCuil():int
+    +getNombre():String
+    +getMail():String
+    +getDireccion():String
+    +setMail(String mail):void
+
+}
+
+class Empleado{
+    -username: String
+    -password: String
+
+    +login(String usuario, String contraseña):boolean
+
+
+
+}
+
+class Administrativo{
+    -instanciaAreaAdministrativo: AreaAdministrativo
+    +Administrativo(String usuario, String contraseña)
+}
+
+class CallCenter{
+    -instanciaAreaCallCenter: AreaCallCenter
+    +CallCenter(String usuario, String contraseña)
+
+}
+
+class Tecnico{
+    -agenda:Agenda
+    -tipoTecnico: TipoTecnico
+    -salario: double
+    -listaInstalacionesAsignada: List<Instalacion>
+
+    +Tecnico(String usuario, String contraseña,String tipoTecnico)
+    +setSalario(double salarioPorExperiencia):void
+    +getSalario():double
+    +setTipoTecnico(String tipoTecnico): void
+    +getTipoTecnico(): TipoTecnico
+    +setInstalacionesAsignadas(Instalacion i): void
+    +getInstalacionesAsignadas(): ArrayList
+
+}
+class AdministradorSistema{
+    -instanciaSistemaAiresAcondicionados: SistemaAiresAcondicionados
+    +AdministradorSistema(String usuario, String contraseña)
+
+}
+
+class Instalacion{
+  -tecnico: Tecnico
+  -nroInstalacion: static int
+  -cliente: Cliente
+  -diaPactado: String
+  -horarioInicioTrabajo: String
+  -horarioFinalTrabajo:String
+  -tiempoTrabajado: String
+  -tiempoDeViaje: String
+  -listaEquiposUtilizados: ArrayList<Equipo>
+  -listaOtrosMaterialesUtilizados: ArrayList<EquipoExtra>
+  -gastoTotal:  double
+  -hayAlmuerzo: boolean
+  -estado: Estado
+
+  +Instalacion(Tecnico tecnico, Cliente cliente, String diaInstalacion, String horarioPactado)
+  +  getTecnico():Tecnico
+  +  getEstado():Estado
+  +  setEstado(Estado estado): void
+  +  actualizarEstado():void
+  +  agregarOtrosMateriales(EquipoExtra[] materialesExtra):void
+  +  setTiempoViaje(String tiempoViaje)
+  +  calcularGastoTotal():double
+  +  setGastoTotal(double gasto): void
+  +  getGastoTotal():double
+  +  setHorarioTrabajadoFinal(String horarioFin):void
+  +  setHorarioTrabajoInicio(String horaInicio):void
+  +  getHorarioTrabajoFinal():String
+  +  getHorarioTrabajoInicio():String
+  +  setHayAlmuerzo(boolean almuerzo): void
+  +  getHayAlmuerzo():boolean
+  +  setEestado(Estado estado):void
+  +  getEstado(): Estado
+
+}
+
+class Agenda{}
+
+class Stock{
+    -cantidad: int
+    -listaMateriales: ArrayList<Material>
+
+    +Stock(int cantidad):
+    +getCantidad():int
+    +setCantidad(int cantidad):void
+    +setMaterial(Material material):void
+    +getMateriales(): listaMateriales
+
+
+}
+
+class Material{
+    -descripcion: String
+    -precio: double
+}
+
+class EquipoExtra{
+    -tipoExtra: EquipoExtra
+    +Extra(String nombre, double precio, String tipoEquipo)
+}
+
+class Equipo{
+    -tipoEquipo: TipoEquipo
+    -Equipo(String nombre, double precio, String tipoEquipo)
+}
+
+class Factura{
+    -instalacion:Instalacion
+    -precioTotal: double
+    -cliente: Cliente
+    -iva: double
+    -tipoFactura: TipoFactura
+}
+
+Enum Estado{
+    PROGRAMADA,
+    EN CURSO,
+    CANCELADA,
+    FINALIZADA,
+
+}
+
+Enum TipoMaterial{
+
+}
+
+Enum TipoFactura{
+    Factura-A,
+    Facutra-B
+}
+
+Enum TipoTecnico{
+    Junior,
+    Semi-Senior,
+    Senior
+  }
+
+SistemaAiresAcondicionados o-- AreaCallCenter
+SistemaAiresAcondicionados o-- AreaAdministrativo
+SistemaAiresAcondicionados o-- AreaTecnico
+SistemaAiresAcondicionados o-- AdministradorSistema
+
+AdministradorSistema o-- Stock
+Stock o--Material
+Material <|-- Equipo
+Material <|-- EquipoExtra
+
+Agenda o-- Instalacion
+Instalacion o--Cliente
+
+
+AreaCallCenter o-- CallCenter
+AreaTecnico o-- Tecnico
+AreaAdministrativo o-- Administrativo
+AreaAdministrativo o-- Instalacion
+
+AreaCallCenter *-- Cliente
+AreaCallCenter *-- Instalacion
+
+Factura o-- Cliente
+Factura o-- Instalacion
+AreaAdministrativo *-- Factura
+
+Cliente o-- Agenda
+Tecnico o-- Agenda
+Tecnico o-- Instalacion
+
+
+
+Empleado <|-- CallCenter
+Empleado <|-- Administrativo
+Empleado <|-- Tecnico
+Empleado <|-- AdministradorSistema
+
+TipoMaterial -- Equipo
+TipoFactura -- Factura
+TipoTecnico -- Tecnico
+Estado -- Instalacion
+@enduml
