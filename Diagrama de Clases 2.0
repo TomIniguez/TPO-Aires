@@ -9,22 +9,23 @@ class SistemaAiresAcondicionados{
     -listaClientes: ArrayList<Cliente>
 }
 
-class AreaAdministrativo{
-    +facturarInstalacionRealizada(Servicio s, Cliente c):Factura
-    +ajustarValoresFacturaSegun(Servicio s): Factura
+ class AreaAdministrativo{
+     +facturarInstalacionRealizada(Servicio s, Cliente c):Factura
+     +ajustarValoresFacturaSegun(Servicio s): Factura
 
-}
-class AreaCallCenter{
-    +programarInstalacion(int nroCliente, String dia, String horario):Instalacion
-    +darDeAltaCliente(int cuit_cuil,string nombre, string direccion,string telefono):void
-}
-class AreaTecnico{
-    +ejecutarInstalacionPlanificada(String dia, String horarioInicio):void
-    +visualizarInstalacionesProgramadas():void
-    +modificarInstalacion(int nroInstalacion):Instalacion
-    +eliminarInstalacion(int nroInstalacion):void
-    +registrarInstalacionRealizada(Tecnico i, string horaInicio, string horaFin, List<Elemento> material):void
-}
+ }
+ class AreaCallCenter{
+     +programarInstalacion(int nroCliente, String dia, String horario):Instalacion
+     +darDeAltaCliente(int cuit_cuil,string nombre, string direccion,string telefono):void
+ }
+
+ class AreaTecnico{
+     +ejecutarInstalacionPlanificada(String dia, String horarioInicio):void
+     +visualizarInstalacionesProgramadas():void
+     +modificarInstalacion(int nroInstalacion):Instalacion
+     +eliminarInstalacion(int nroInstalacion):void
+     +registrarInstalacionRealizada(Tecnico i, string horaInicio, string horaFin, List<Elemento> material):void
+ }
 
 
 class Cliente{
@@ -141,15 +142,6 @@ class Material{
     -precio: double
 }
 
-class EquipoExtra{
-    -tipoExtra: EquipoExtra
-    +Extra(String nombre, double precio, String tipoEquipo)
-}
-
-class Equipo{
-    -tipoEquipo: TipoEquipo
-    -Equipo(String nombre, double precio, String tipoEquipo)
-}
 
 class Factura{
     -instalacion:Instalacion
@@ -182,18 +174,17 @@ Enum TipoTecnico{
     Senior
   }
 
-SistemaAiresAcondicionados o-- AreaCallCenter
-SistemaAiresAcondicionados o-- AreaAdministrativo
-SistemaAiresAcondicionados o-- AreaTecnico
-SistemaAiresAcondicionados o-- AdministradorSistema
+SistemaAiresAcondicionados o-[#red]- AreaCallCenter
+SistemaAiresAcondicionados o-[#red]- AreaAdministrativo
+SistemaAiresAcondicionados o-[#red]- AreaTecnico
+SistemaAiresAcondicionados o-[#red]- AdministradorSistema
 
 AdministradorSistema o-- Stock
-Stock o--Material
-Material <|-- Equipo
-Material <|-- EquipoExtra
+Stock o-down- Material
+
 
 Agenda o-- Instalacion
-Instalacion o--Cliente
+Instalacion o- Cliente
 
 
 AreaCallCenter o-- CallCenter
@@ -214,13 +205,13 @@ Tecnico o-- Instalacion
 
 
 
-Empleado <|-- CallCenter
-Empleado <|-- Administrativo
-Empleado <|-- Tecnico
-Empleado <|-- AdministradorSistema
+Empleado <|-[#blue]- CallCenter
+Empleado <|-[#blue]- Administrativo
+Empleado <|-[#blue]- Tecnico
+Empleado <|-[#blue]- AdministradorSistema
 
-TipoMaterial -- Equipo
-TipoFactura -- Factura
-TipoTecnico -- Tecnico
-Estado -- Instalacion
+TipoMaterial -left- Material
+TipoFactura -left- Factura
+TipoTecnico -left- Tecnico
+Estado -right- Instalacion
 @enduml
