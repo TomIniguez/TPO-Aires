@@ -6,25 +6,53 @@ class SistemaAiresAcondicionados{
     -listaEmpleadoAdministrativo: ArrayList<Administrativo>
     -listaEmpleadosAdministradorSistema: ArrayList<AdministradorSistema>
     -listaClientes: ArrayList<Cliente>
+
+    -SistemaAiresAcondicionados():
+    +getInstanciaAreasAcondicionados(): SistemaAiresAcondicionados
+    +buscarCliente(idCliente):Cliente
+    +buscarTecnico(idTecnico):Tecnico
+    +buscarFactura(idFactura):Factura
+    +verificarStockEquipos(String descripcion): boolean
+    +actualizarStock(String descripcion, int cantidad, String tipoEquipo, double precio):void
+    +getEquipo(String descripcion): Material
+    +agregarClienteASistema(Cliente c):void
+    +agregarTecnicoASistema(Tecnico t): void
+    +agregarCallCenterASistema(CallCenter center): void
+    +agregarAdministrativoASistema(Administrativo a):void
+    +agreagarAdminSistemaASistema(AdministradorSistema aSist):void
 }
 
- class AreaAdministrativo{
-     +facturarInstalacionRealizada(Servicio s, Cliente c):Factura
-     +ajustarValoresFacturaSegun(Servicio s): Factura
+class AreaAdministrativo{
+    -instanciaSistemaAireAcondicionado : SistemaAiresAcondicionados
+    -instanciaAreaAdministrativo: AreaAdministrativo;
 
- }
- class AreaCallCenter{
-     +programarInstalacion(int nroCliente, String dia, String horario):Instalacion
-     +darDeAltaCliente(int cuit_cuil,string nombre, string direccion,string telefono):void
- }
+    -AreaAdministrativo()
+    +getInstanciaAreaAdministrativo(): AreaAdministrativo
+    +facturarInstalacionRealizada(Servicio s, Cliente c):Factura
+    +ajustarValoresFacturaSegun(Instalacion i): Factura
 
- class AreaTecnico{
-     +ejecutarInstalacionPlanificada(String dia, String horarioInicio):void
-     +visualizarInstalacionesProgramadas():void
-     +modificarInstalacion(int nroInstalacion):Instalacion
-     +eliminarInstalacion(int nroInstalacion):void
-     +registrarInstalacionRealizada(Tecnico i, string horaInicio, string horaFin, List<Elemento> material):void
- }
+}
+class AreaCallCenter{
+    -instanciaAreaCallCenter: AreaCallCenter
+    -instanciaSistemaAireAcondicionado : SistemaAiresAcondicionados
+
+    -AreaCallCenter()
+    +getInstanciaCallCenter(): AreaCallCenter
+    +programarInstalacion(int nroCliente, String dia, String horario):Instalacion
+    +darDeAltaCliente(int cuit_cuil,string nombre, string direccion,string telefono):void
+}
+class AreaTecnico{
+    -instanciaSistemaAireAcondicionado : SistemaAiresAcondicionados;
+    -instanciaAreaTecnico: AreaTecnico
+
+    -AreaTecnico()
+    +getInstanciaAreaTecnico(): AreaTecnico
+    +ejecutarInstalacionPlanificada(String dia, String horarioInicio):void
+    +visualizarInstalacionesProgramadas():void
+    +modificarInstalacion(int nroInstalacion):Instalacion
+    +eliminarInstalacion(int nroInstalacion):void
+    +registrarInstalacionRealizada(Tecnico i, string horaInicio, string horaFin, List<Elemento> material):void
+}
 
 
 class Cliente{
@@ -32,6 +60,7 @@ class Cliente{
     -direccion: String
     -mail: String
     -telefono:String
+    -agenda: Agenda
 
     +Cliente(string nombreCliente, int cuit_cuil, string direccion, string mail, string telefono)
     +Cliente(string nombreCliente, int cuit_cuil, string direccion, string telefono)
@@ -40,6 +69,8 @@ class Cliente{
     +getMail():String
     +getDireccion():String
     +setMail(String mail):void
+    +getAgenda():Agenda
+
 
 }
 
@@ -54,7 +85,7 @@ class Empleado{
 }
 
 class Administrativo{
-    -instanciaAreaAdministrativo: AreaAdministrativo
+    -getInstanciaAreaAdministrativo: AreaAdministrativo
     +Administrativo(String usuario, String contraseña)
 }
 
@@ -121,7 +152,40 @@ class Instalacion{
 
 }
 
-class Agenda{}
+class Agenda{
+    -diaAgenda: Dia
+    -listaDias:String[]
+    -year: String
+
+    +Agenda(String year)
+    +getFecha(String fecha): Dia
+    +modificarFecha(String fecha): void
+    +verificarDisponibilidad(String dia, String mes,String turno, String horario):boolean
+}
+
+class Dia{
+    -dia:String
+    -mes: String
+    -year: String
+    -turno: TipoTurno
+    -horarioTurnoTarde: []
+    -horarioTurnoMañana: []
+    -instalacion: Instalacion
+
+    +Dia(String dia, String mes, String year, String turno)
+    +Dia(String dia, String mes, String year, String turno)
+    +getDia(): String
+    +getMes(): String
+    +getYear(): String
+    +getTurno(): String
+    +getHorarioTurnoTarde(): []
+    +getHorarioTurnoMañana(): []
+    +getInstalacion():Instalacion
+    +modificarHorario(String horaInicio, horaFin):void
+
+
+
+}
 
 class Stock{
     -cantidad: int
@@ -139,8 +203,8 @@ class Stock{
 class Material{
     -descripcion: String
     -precio: double
+    -tipoEquipo: TipoEquipo
 }
-
 
 class Factura{
     -instalacion:Instalacion
@@ -158,8 +222,9 @@ Enum Estado{
 
 }
 
-Enum TipoMaterial{
-
+Enum TipoEquipo{
+    PRINCIPAL,
+    OTROS
 }
 
 Enum TipoFactura{
@@ -172,45 +237,52 @@ Enum TipoTecnico{
     Semi-Senior,
     Senior
   }
+Enum TipoTurno{
+    MAÑANA,
+    OTROS,
+}
 
-SistemaAiresAcondicionados o-[#red]- AreaCallCenter
-SistemaAiresAcondicionados o-[#red]- AreaAdministrativo
-SistemaAiresAcondicionados o-[#red]- AreaTecnico
-SistemaAiresAcondicionados o-[#red]- AdministradorSistema
+SistemaAiresAcondicionados "  1" o-- "  1" AreaCallCenter : ">"
+SistemaAiresAcondicionados "1  " o-- "1  " AreaAdministrativo : ">"
+SistemaAiresAcondicionados "1" o-- "1" AreaTecnico : ">"
+SistemaAiresAcondicionados "1" o-- "1" AdministradorSistema : ">"
 
-AdministradorSistema o-- Stock
-Stock o-down- Material
-
-
-Agenda o-- Instalacion
-Instalacion o- Cliente
-
-
-AreaCallCenter o-- CallCenter
-AreaTecnico o-- Tecnico
-AreaAdministrativo o-- Administrativo
-AreaAdministrativo o-- Instalacion
-
-AreaCallCenter *-- Cliente
-AreaCallCenter *-- Instalacion
-
-Factura o-- Cliente
-Factura o-- Instalacion
-AreaAdministrativo *-- Factura
-
-Cliente o-- Agenda
-Tecnico o-- Agenda
-Tecnico o-- Instalacion
+AdministradorSistema " 1...* " o-- " 1" Stock
+Stock "1" o-- "1..*" Material
 
 
+Instalacion "1" o-- "1" Cliente
+Instalacion "1...*" *-- "1" Stock
 
-Empleado <|-[#blue]- CallCenter
-Empleado <|-[#blue]- Administrativo
-Empleado <|-[#blue]- Tecnico
-Empleado <|-[#blue]- AdministradorSistema
 
-TipoMaterial -left- Material
-TipoFactura -left- Factura
-TipoTecnico -left- Tecnico
-Estado -right- Instalacion
+AreaCallCenter "1" o-- " 1" CallCenter
+AreaTecnico "1" o-- " 1...*" Tecnico
+AreaAdministrativo "1" o-- "  1...*" Administrativo
+AreaAdministrativo "1" o-- " 1...* " Instalacion
+
+AreaCallCenter "1" *-- " 1....*" Cliente
+AreaCallCenter "1" *-- "1...*" Instalacion
+
+Factura "1" o-- "1" Cliente
+Factura "1" o-- "1" Instalacion
+AreaAdministrativo "1" *-- "1...*" Factura
+
+Cliente "1..*" o-- "1" Agenda
+Tecnico "1...*" o-- "1" Agenda
+Instalacion "1..*" o-- "1" Agenda
+Agenda "1" *-- "1...*" Dia
+Tecnico "1" o-- "1..*" Instalacion
+
+Instalacion "1" o-- "1..*" Material
+
+Empleado <|-- CallCenter
+Empleado <|-- Administrativo
+Empleado <|-- Tecnico
+Empleado <|-- AdministradorSistema
+
+TipoEquipo -- Material
+TipoFactura -- Factura
+TipoTecnico -- Tecnico
+Estado -- Instalacion
+TipoTurno -- Dia
 @enduml
