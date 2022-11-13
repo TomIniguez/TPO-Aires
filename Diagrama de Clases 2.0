@@ -20,6 +20,7 @@ class SistemaAiresAcondicionados{
     +agregarCallCenterASistema(CallCenter center): void
     +agregarAdministrativoASistema(Administrativo a):void
     +agreagarAdminSistemaASistema(AdministradorSistema aSist):void
+    +sendArea(String username) : void
 }
 
 class AreaAdministrativo{
@@ -30,6 +31,7 @@ class AreaAdministrativo{
     +getInstanciaAreaAdministrativo(): AreaAdministrativo
     +facturarInstalacionRealizada(Servicio s, Cliente c):Factura
     +ajustarValoresFacturaSegun(Instalacion i): Factura
+    +getListaDeInstalacionesPorEstado(Estado): List<Instalacion>
 
 }
 class AreaCallCenter{
@@ -130,6 +132,7 @@ class Instalacion{
   -gastoTotal:  double
   -hayAlmuerzo: boolean
   -estado: Estado
+  -listaInstalaciones : List<Instalaciones>
 
   +Instalacion(Tecnico tecnico, Cliente cliente, String diaInstalacion, String horarioPactado)
   +  getTecnico():Tecnico
@@ -149,6 +152,7 @@ class Instalacion{
   +  getHayAlmuerzo():boolean
   +  setEestado(Estado estado):void
   +  getEstado(): Estado
+  +  generarListaDeInstalacionesPorEstado(Estado) : List<Instalaciones>
 
 }
 
