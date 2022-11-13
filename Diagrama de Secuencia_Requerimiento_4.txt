@@ -1,0 +1,20 @@
+@startuml
+
+actor Usuario
+activate AreaAdministrativo
+Usuario -> AreaAdministrativo: ListarFacturas():List<Factura>
+activate Factura
+AreaAdministrativo -> Factura: getNroFactura():int
+AreaAdministrativo -> Factura: getPrecioTotal():double
+AreaAdministrativo -> Factura: getPrecioPorConcepto():double
+AreaAdministrativo -> Factura: getIva():double
+AreaAdministrativo -> Factura: getTipoFactura():TipoFactura
+alt TIPO-A
+AreaAdministrativo -> System: List<Factura>
+else TIPO-B
+AreaAdministrativo -> Factura: getPrecioTotal()+getIva()
+AreaAdministrativo -> System: List<Factura>
+end
+destroy Factura
+
+@enduml
