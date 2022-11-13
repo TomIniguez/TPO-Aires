@@ -1,0 +1,36 @@
+@startuml
+actor Usuario
+activate SistemaAiresAcondicionados
+activate AreaAdministrativo
+Usuario -> SistemaAiresAcondicionados: login(String username , String contraseña)
+
+SistemaAiresAcondicionados -> AreaAdministrativo: ListarFacturas(): List <Factura>
+activate Factura
+
+    loop <Factura>
+
+    AreaAdministrativo -> Factura: getNroFactura(): int
+    AreaAdministrativo -> Factura: getPrecioTotal(): double
+    AreaAdministrativo -> Factura: getPrecioPorConcepto(): double
+    AreaAdministrativo -> Factura: getIVA(): double
+    AreaAdministrativo -> Factura: getTipoFactura(): TipoFactura
+
+    activate System
+    AreaAdministrativo --> System: NroFactura , PrecioTotal , PrecioPorConcepto , IVA, TipoFactura
+/'        alt TIPO-A
+
+        AreaAdministrativo -> System: List <Factura>
+
+        else
+        AreaAdministrativo -> Factura: getPrecioTotal() + getIVA()
+        AreaAdministrativo -> System: List <Factura>
+        end'/
+
+
+    end
+
+destroy Factura
+destroy AreaAdministrativo
+destroy SistemaAiresAcondicionados
+destroy System
+@enduml
