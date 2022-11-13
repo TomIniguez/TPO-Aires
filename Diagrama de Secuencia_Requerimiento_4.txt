@@ -1,8 +1,10 @@
 @startuml
 
 actor Usuario
+activate SistemaAiresAcondicionado
 activate AreaAdministrativo
-Usuario -> AreaAdministrativo: ListarFacturas():List<Factura>
+Usuario -> SistemaAiresAcondicionado: login(String username, String contraseña)
+SistemaAiresAcondicionado -> AreaAdministrativo: ListarFacturas():List<Factura>
 activate Factura
 AreaAdministrativo -> Factura: getNroFactura():int
 AreaAdministrativo -> Factura: getPrecioTotal():double
@@ -16,5 +18,7 @@ AreaAdministrativo -> Factura: getPrecioTotal()+getIva()
 AreaAdministrativo -> System: List<Factura>
 end
 destroy Factura
+destroy AreaAdministrativo
+destroy SistemaAiresAcondicionado
 
 @enduml
