@@ -1,0 +1,53 @@
+@startuml
+actor Ususario as foo
+participant SistemaAiresAcondicionado as foo1
+participant AreaAdministrativo as foo2
+participant Instalacion as foo3
+
+foo -> foo1 : login(String username, String contraseña)
+
+Activate foo1
+
+foo1 -> foo2 : sendArea(String username)
+
+Activate foo2
+
+alt PROGRAMADA
+ 
+
+
+ foo2 -> foo3 : getListaDeInstalacionesPorEstado(Estado)
+
+Activate foo3
+
+ foo3 -> foo3 : generarListaDeInstalacionesPorEstado(Estado)
+ foo3 -> foo2 : listaInstalacionesProgramadas
+
+
+
+else EN CURSO
+
+ foo3 -> foo2 : listaInstalacionesEnCurso
+
+else FINALIZADA
+
+ foo3 -> foo2 : listaInstalacionesFinalizadas
+
+else CANCELADA
+
+ foo3 -> foo2 : listaInstalacionesCanceladas
+
+Deactivate foo3
+Destroy foo3
+
+end
+
+
+foo2 -> foo : VistaDeLista
+
+Deactivate foo2
+Destroy foo2
+
+Deactivate foo1
+Destroy foo1
+@enduml
