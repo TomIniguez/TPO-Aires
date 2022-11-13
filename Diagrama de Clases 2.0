@@ -25,13 +25,14 @@ class SistemaAiresAcondicionados{
 
 class AreaAdministrativo{
     -instanciaSistemaAireAcondicionado : SistemaAiresAcondicionados
-    -instanciaAreaAdministrativo: AreaAdministrativo;
+    -instanciaAreaAdministrativo: AreaAdministrativo
 
     -AreaAdministrativo()
     +getInstanciaAreaAdministrativo(): AreaAdministrativo
     +facturarInstalacionRealizada(Servicio s, Cliente c):Factura
-    +ajustarValoresFacturaSegun(Instalacion i): Factura
+    +ajustarValoresFacturaSegun(Instalacion i):Factura
     +getListaDeInstalacionesPorEstado(Estado): List<Instalacion>
+    +listarFacturas():List<Factura>
 
 }
 class AreaCallCenter{
@@ -81,8 +82,6 @@ class Empleado{
     -password: String
 
     +login(String usuario, String contraseña):boolean
-
-
 
 }
 
@@ -212,10 +211,17 @@ class Material{
 
 class Factura{
     -instalacion:Instalacion
-    -precioTotal: double
-    -cliente: Cliente
-    -iva: double
-    -tipoFactura: TipoFactura
+    -nroFactura:int
+    -precioTotal:double
+    -precioPorConcepto:double
+    -cliente:Cliente
+    -iva:double
+    -tipoFactura:TipoFactura
+    +getNroFactura():int
+    +getPrecioTotal():double
+    +getPrecioPorConcepto():double
+    +getIva():double
+    +getTipoFactura():TipoFactura
 }
 
 Enum Estado{
@@ -223,7 +229,6 @@ Enum Estado{
     EN CURSO,
     CANCELADA,
     FINALIZADA,
-
 }
 
 Enum TipoEquipo{
@@ -289,4 +294,5 @@ TipoFactura -- Factura
 TipoTecnico -- Tecnico
 Estado -- Instalacion
 TipoTurno -- Dia
+
 @enduml
