@@ -16,16 +16,15 @@ activate Factura
     AreaAdministrativo -> Factura: getTipoFactura(): TipoFactura
 
     activate System
-    AreaAdministrativo --> System: NroFactura , PrecioTotal , PrecioPorConcepto , IVA, TipoFactura
-/'        alt TIPO-A
 
-        AreaAdministrativo -> System: List <Factura>
+       alt getTipoFactura() = A
+
+        AreaAdministrativo --> System: NroFactura , PrecioTotal , PrecioPorConcepto ,  TipoFactura
 
         else
-        AreaAdministrativo -> Factura: getPrecioTotal() + getIVA()
-        AreaAdministrativo -> System: List <Factura>
-        end'/
+        AreaAdministrativo --> System: NroFactura , PrecioTotal + IVA , PrecioPorConcepto ,  TipoFactura
 
+        end
 
     end
 
